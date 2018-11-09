@@ -24,6 +24,7 @@ namespace Lab10
                     callToVerification = Validator.Verify(userInput);
                     if (!callToVerification)
                     {
+                        Console.Write("Error!!! Please enter a valid number:  ");
                         userInput = Console.ReadLine();
                     }
                 }
