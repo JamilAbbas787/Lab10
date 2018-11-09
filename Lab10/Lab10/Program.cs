@@ -14,85 +14,41 @@ namespace Lab10
             Console.WriteLine("Enter radius:  ");
             bool callToVerification = false;
             string userInput = Console.ReadLine();
+            string userContinue = "y";
+            int circlesCreated = 1;
 
-            while (!callToVerification)
-            {               
-                callToVerification = Validator.Verify(userInput);
-                if (!callToVerification)
+            while(userContinue.Equals("y", StringComparison.OrdinalIgnoreCase))
+            {
+                while (!callToVerification)
                 {
+                    callToVerification = Validator.Verify(userInput);
+                    if (!callToVerification)
+                    {
+                        userInput = Console.ReadLine();
+                    }
+                }
+
+                double.TryParse(userInput, out double userEnteredRadius);
+                var circleTester = new Circle(userEnteredRadius);
+                Console.WriteLine($"Radius: {circleTester.Radius}");
+                Console.WriteLine(circleTester.CalculateFormattedCircumference());
+                Console.WriteLine(circleTester.CalculateFormattedArea());
+
+                Console.WriteLine("Continue? (y/n):  ");
+                userContinue = Console.ReadLine();
+                if (userContinue.Equals("y", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Enter radius:  ");
                     userInput = Console.ReadLine();
+                    circlesCreated++;
                 }
             }
 
-            double.TryParse(userInput, out double userEnteredRadius);
-            var circleTester = new Circle(userEnteredRadius);
+            Console.WriteLine($"Goodbye. You created {circlesCreated} Circle object(s)");
 
+            Console.ReadKey();
         }
     }
-
-    class Circle
-    {
-        public Circle(double radius)
-        {
-            Radius = radius;
-        }
-
-        public double CalculateCircumference()
-        {
-
-            double calculatedCircumference = (_radius * 2) * Math.PI;
-            return calculatedCircumference;
-
-        }
-
-        public string CalculateFormattedCircumference()
-        {
-            string formattedCircumference = $"Circumference: {CalculateCircumference()}";
-            return formattedCircumference;
-        }
-
-        public double CalculateArea()
-        {
-            double circleArea = Math.Pow(_radius, 2) * Math.PI;
-            return circleArea;
-        }
-
-        public string CalculateFormattedArea()
-        {
-            string areaFormatted = $"Area: {CalculateArea()}";
-            return areaFormatted;
-
-        }
-
-        private string FormatNumber(double x)
-        {
-
-        }
-
-        private double _radius;
-
-        public double Radius
-        { get { return _radius; }
-          set { _radius = value; }
-        }
-
-
-    }
-
-    class Validator
-    {
-        public static bool Verify(string radius)
-        {
-            bool converstionToInt =  int.TryParse(radius, out int radiusToNumber);
-            if (converstionToInt)
-            {
-                return true;
-            }
-            return false;
-        }
-
-    }
-
 
 }
 
